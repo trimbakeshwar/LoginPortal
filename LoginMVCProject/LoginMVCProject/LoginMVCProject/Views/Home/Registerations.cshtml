@@ -1,0 +1,244 @@
+﻿@model LoginMVCProject.Controllers.HomeController
+@{
+    ViewData["Title"] = "Registration";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: black;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Add padding to containers */
+        .container {
+            padding: 16px;
+            background-color: white;
+        }
+
+        /* Full-width input fields */
+        input[type=text], input[type=password], input[type=number], select {
+            width: 100%;
+            padding: 15px;
+            margin: 3px 0 0px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+        }
+
+            input[type=text]:focus, input[type=password]:focus {
+                background-color: #ddd;
+                outline: none;
+            }
+
+        /* Overwrite default styles of hr */
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 0px;
+        }
+
+        /* Set a style for the submit button */
+        .registerbtn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 16px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.9;
+        }
+
+            .registerbtn:hover {
+                opacity: 1;
+            }
+
+        /* Add a blue text color to links */
+        a {
+            color: dodgerblue;
+        }
+
+        /* Set a grey background color and center the text of the "sign in" section */
+        .signin {
+            background-color: #f1f1f1;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <form asp-action="Registerations" method="post">
+        <div class="container">
+            <h1>Register</h1>
+            <p>Please fill in this form to create an account.</p>
+            <hr>
+
+            <label for="FirstName"><b>FirstName</b></label>
+            <input type="text" placeholder="Enter FirstName" asp-for="@Model.Register.FirstName" required>
+            <span id="FirstName_danger" class="text-danger d-none"> FirstName required*</span>
+            <hr />
+            <label for="LastName"><b>LastName</b></label>
+            <input type="text" placeholder="Enter LastName" asp-for="@Model.Register.LastName" required>
+            <span id="LastName_danger" class="text-danger d-none">LastName required*</span>
+            <hr />
+            <label for="email"><b>Email</b></label>
+            <input type="text" placeholder="Enter Email" asp-for="@Model.Register.Email" required>
+            <span id="email_danger" class="text-danger d-none">email required*</span>
+            <hr />
+            <label for="state"><b>State</b></label>
+            <select asp-for="@Model.Register.State">
+                <option value="">select</option>
+                <option value="Maharastra">Maharastra</option>
+            </select>
+            <span id="State_danger" class="text-danger d-none"> State required*</span>
+            <hr />
+            <label for="City"><b>City</b></label>
+            <select asp-for="@Model.Register.City">
+                <option value="">select</option>
+                <option value="pune">pune</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Latur">Latur</option>
+                <option value="Nagpur">Nagpur</option>
+            </select>
+            <span id="City_danger" class="text-danger d-none"> City required*</span>
+            <hr />
+            <label for="psw-repeat"><b>PhoneNumber</b></label>
+            <input min="10" max="10" type="number" placeholder="Repeat PhoneNumber" asp-for="@Model.Register.PhoneNumber" required>
+            <span id="PhoneNumber_danger" class="text-danger d-none">PhoneNumber required*</span>
+            <span id="PhoneNumber_length" class="text-danger d-none">PhoneNumber should be 10 number*</span>
+            <hr />
+
+            <label for="psw"><b>Password</b></label>
+            <input  type="password" placeholder="Enter Password" asp-for="@Model.Register.Password" id="Password" required>
+            <span id="Password_danger" class="text-danger d-none">Password required*</span>
+            <hr />
+            <span id="Password_Pattern" class="text-danger d-none">Password must contain Special charector, number,uppercase ,lower case lettrs and minimun length should be 8 *</span>
+            <hr />
+            <label for="psw-repeat"><b>Repeat Password</b></label>
+            <input type="password"  placeholder="Repeat Password" asp-for="@Model.Register.Password" id="ConfirmPassword" required>
+            <span id="Confirm_Password_danger" class="text-danger d-none">Confirm Password required*</span>
+            <hr />
+            <span id="Password_Pattern" class="text-danger d-none">Password must contain Special charector, number,uppercase ,lower case lettrs and minimun length should be 8 *</span>
+            <span id="Password_Mismatch" class="text-danger d-none">password and Confirm Password missmatch*</span>
+            <hr />
+
+
+            <hr>
+
+            <button type="button" class="registerbtn" onclick="CheckPassword(this)">Register</button>
+            <span id="error_Message" class="text-danger">@Model?.Message</span>
+
+
+        </div>
+
+        <div class="container signin">
+            <p>Already have an account? <a href="home/Login">Sign in</a>.</p>
+        </div>
+    </form>
+
+</body>
+
+</html>
+<script>
+    function CheckPassword(_this) {
+        let isValidated = true;
+        var pattern = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$/)
+
+        if ($("#Register_FirstName").val() == null || $("#Register_FirstName").val() == "") {
+            $("#FirstName_danger").removeClass("d-none");
+            isValidated = false;
+        }
+        else
+            $("#FirstName_danger").addClass("d-none");
+
+        if ($("#Register_LastName").val() == null || $("#Register_LastName").val() == "") {
+            $("#LastName_danger").removeClass("d-none");
+            isValidated = false;
+        }
+        else
+            $("#LastName_danger").addClass("d-none");
+
+        if ($("#Register_Email").val() == null || $("#Register_Email").val() == "") {
+            $("#email_danger").removeClass("d-none");
+            isValidated = false;
+        }
+        else
+            $("#email_danger").addClass("d-none");
+
+        if ($("#Register_State").val() == null || $("#Register_State").val() == "") {
+            $("#State_danger").removeClass("d-none");
+            isValidated = false;
+        }
+        else
+            $("#State_danger").addClass("d-none");
+
+        if ($("#Register_City").val() == null || $("#Register_City").val() == "") {
+            $("#City_danger").removeClass("d-none");
+            isValidated = false;
+        }
+        else
+            $("#City_danger").addClass("d-none");
+
+        if ($("#Register_PhoneNumber").val().length == null || $("#Register_PhoneNumber").val().length == "") {
+            $("#PhoneNumber_danger").removeClass("d-none");
+            isValidated = false;
+        }
+        else
+            $("#PhoneNumber_danger").addClass("d-none") 
+            
+            if ($("#Register_PhoneNumber").val().length != 10) {
+            $("#PhoneNumber_length").removeClass("d-none");
+            isValidated = false;
+        }
+        else
+            $("#PhoneNumber_length").addClass("d-none")
+
+        if ($("#Password").val() == null || $("#Password").val() == "") {
+            $("#Password_danger").removeClass("d-none");
+            isValidated = false;
+        }
+        else
+            $("#Password_danger").addClass("d-none");
+
+        if ($("#ConfirmPassword").val() == null || $("#ConfirmPassword").val() == "") {
+            $("#Confirm_Password_danger").removeClass("d-none");
+            isValidated = false;
+        }
+        else
+            $("#Confirm_Password_danger").addClass("d-none");
+
+        if ($("#Password").val() != $("#ConfirmPassword").val()) {
+            $("#Password_Mismatch").removeClass("d-none");
+            isValidated = false;
+        }
+        else
+            $("#Password_Mismatch").addClass("d-none");
+       
+            if (!pattern.test($("#Password").val())) {
+            $("#Password_Pattern").removeClass("d-none");
+            isValidated = false;
+        }
+        else
+            $("#Password_Pattern").addClass("d-none");
+        
+        if (isValidated) {
+            $(_this).closest('form').submit();
+        }
+        else
+            return false;
+    }
+</script>
+
+
+
+
+
+
+
+

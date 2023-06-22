@@ -1,0 +1,135 @@
+﻿
+@model LoginMVCProject.Controllers.HomeController
+
+@{
+    string returnedUrl = ViewData["returnedUrl"] as string;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: black;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Add padding to containers */
+        .container {
+            padding: 16px;
+            background-color: white;
+        }
+
+        /* Full-width input fields */
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+        }
+
+            input[type=text]:focus, input[type=password]:focus {
+                background-color: #ddd;
+                outline: none;
+            }
+
+        /* Overwrite default styles of hr */
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+
+        /* Set a style for the submit button */
+        .registerbtn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 16px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.9;
+        }
+
+            .registerbtn:hover {
+                opacity: 1;
+            }
+
+        /* Add a blue text color to links */
+        a {
+            color: dodgerblue;
+        }
+
+        /* Set a grey background color and center the text of the "sign in" section */
+        .signin {
+            background-color: #f1f1f1;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <form  method="post" action="Login?ReturnUrl=@System.Net.WebUtility.UrlEncode(returnedUrl)"  >
+        <div class="container">
+            <h1>Login</h1>
+            
+            <hr>
+
+           
+            <label for="email"><b>Email</b></label>
+            <input type="text" placeholder="Enter Email"  asp-for="@Model.Register.Email" required>
+            <span id="email_danger" class="text-danger d-none">email required*</span>
+            <hr />
+            
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" asp-for="@Model.Register.Password"  id="Password" required>
+            <span id="password_danger" class="text-danger d-none">password required*</span>
+            <hr />
+
+            <hr>
+            <p> <a href="/Home/ForgotPassword">Forgot Password</a>.</p>
+            <hr>
+
+            <button type="button" class="registerbtn" onclick="CheckPassword(this)">Sign in</button>
+        </div>
+
+        
+    </form>
+
+</body>
+</html>
+<script>
+    function CheckPassword(_this) {
+        let isValidated = true;
+
+        
+
+        if ($("#Register_Email").val() == null || $("#Register_Email").val() == "") {
+            $("#email_danger").removeClass("d-none");
+            isValidated = false;
+        }
+        else
+            $("#email_danger").addClass("d-none");
+
+        if ($("#Password").val() == null || $("#Password").val() == "") {
+            $("#password_danger").removeClass("d-none");
+            isValidated = false;
+        }
+        else
+            $("#password_danger").addClass("d-none");
+
+       
+
+        if (isValidated) {
+            $(_this).closest('form').submit();
+        }
+        else
+            return false;
+    }
+</script>
